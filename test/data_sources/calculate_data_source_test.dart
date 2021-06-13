@@ -58,26 +58,93 @@ void main() {
       expect(furthest, expected);
     });
   });
-  
+
   group('wyznaczanie otoczki', () {
-    test('Poprawnie wyznacz otoczkę z pięciu punktów', () async {
+    test('Poprawnie wyznacz otoczkę z czterech punktów', () async {
       final List<PointModel> points = [
         PointModel(x: 2.0, y: 2.0),
         PointModel(x: 2.0, y: 0.0),
-        PointModel(x: 0.0, y: 2.0),
+        PointModel(x: 1.0, y: 0.50),
         PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 1.0, y: 1.0),
       ];
       final List<PointModel> expected = [
-        PointModel(x: 2.0, y: 2.0),
-        PointModel(x: 2.0, y: 0.0),
         PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 0.0, y: 2.0),
+        PointModel(x: 2.0, y: 0.0),
+        PointModel(x: 2.0, y: 2.0),
       ];
 
       final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
 
-      expect(actual.lines, expected);
+      expect(actual.convexHull, expected);
+    });
+
+    test('Poprawnie wyznacz otoczkę z czterech punktów współliniowych', () async {
+      final List<PointModel> points = [
+        PointModel(x: 3.0, y: 0.0),
+        PointModel(x: 2.0, y: 0.0),
+        PointModel(x: 1.0, y: 0.0),
+        PointModel(x: 0.0, y: 0.0),
+      ];
+      final List<PointModel> expected = [
+        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 3.0, y: 0.0),
+      ];
+
+      final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
+
+      expect(actual.convexHull, expected);
+    });
+
+    test('Poprawnie wyznacz otoczkę punktów z czego pierwszy i ostatni są współliniowe', () async {
+      final List<PointModel> points = [
+        PointModel(x: 2.0, y: 2.0),
+        PointModel(x: 2.0, y: 0.0),
+        PointModel(x: 1.0, y: 1.0),
+        PointModel(x: 0.0, y: 0.0),
+      ];
+      final List<PointModel> expected = [
+        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 2.0, y: 0.0),
+        PointModel(x: 2.0, y: 2.0),
+      ];
+
+      final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
+
+      expect(actual.convexHull, expected);
+    });
+
+    test('Poprawnie wyznacz otoczkę punktów z czego pierwszy i ostatni są tym samym punktem', () async {
+      final List<PointModel> points = [
+        PointModel(x: 2.0, y: 2.0),
+        PointModel(x: 2.0, y: 0.0),
+        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 0.0, y: 0.0),
+      ];
+      final List<PointModel> expected = [
+        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 2.0, y: 0.0),
+        PointModel(x: 2.0, y: 2.0),
+      ];
+
+      final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
+
+      expect(actual.convexHull, expected);
+    });
+
+    test('Poprawnie wyznacz otoczkę punktów które są w tych smaych kooordynatach', () async {
+      final List<PointModel> points = [
+        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 0.0, y: 0.0),
+      ];
+      final List<PointModel> expected = [
+        PointModel(x: 0.0, y: 0.0),
+      ];
+
+      final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
+
+      expect(actual.convexHull, expected);
     });
   });
 }

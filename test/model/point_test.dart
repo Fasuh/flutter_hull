@@ -13,21 +13,27 @@ void main() {
   group('Wyznaczanie kątu między punktami', () {
     final PointModel firstPoint = PointModel(x: 1.0, y: 1.0);
 
-    test('kąt 90', () {
+    test('kąt -45', () {
       final PointModel other = PointModel(x: 2.0, y: 0.0);
+      final double expected = -45.0;
+      expect(other.degreesInRelationToPoint(firstPoint), expected);
+    });
+
+    test('kąt 0', () {
+      final PointModel other = PointModel(x: 2.0, y: 1.0);
+      final double expected = 0.0;
+      expect(other.degreesInRelationToPoint(firstPoint), expected);
+    });
+
+    test('kąt 90', () {
+      final PointModel other = PointModel(x: 1.0, y: 2.0);
       final double expected = 90.0;
       expect(other.degreesInRelationToPoint(firstPoint), expected);
     });
 
     test('kąt 180', () {
-      final PointModel other = PointModel(x: 2.0, y: 1.0);
-      final double expected = 180.0;
-      expect(other.degreesInRelationToPoint(firstPoint), expected);
-    });
-
-    test('kąt 0', () {
       final PointModel other = PointModel(x: 0.0, y: 1.0);
-      final double expected = 0.0;
+      final double expected = 180;
       expect(other.degreesInRelationToPoint(firstPoint), expected);
     });
   });
@@ -37,12 +43,12 @@ void main() {
 
     test('0 powinno być przed 180', () {
       final List<PointModel> points = [
-        PointModel(x: 1.0, y: 0.0),
         PointModel(x: -1.0, y: 0.0),
+        PointModel(x: 1.0, y: 0.0),
       ];
       final List<PointModel> expected = [
-        PointModel(x: -1.0, y: 0.0),
         PointModel(x: 1.0, y: 0.0),
+        PointModel(x: -1.0, y: 0.0),
       ];
 
       expect(point.sortInDegreesRelationToThis(points), expected);
@@ -50,12 +56,12 @@ void main() {
 
     test('90 powinno być przed 180', () {
       final List<PointModel> points = [
-        PointModel(x: 1.0, y: 0.0),
-        PointModel(x: 0.0, y: -1.0),
+        PointModel(x: -1.0, y: 0.0),
+        PointModel(x: 0.0, y: 1.0),
       ];
       final List<PointModel> expected = [
-        PointModel(x: 0.0, y: -1.0),
-        PointModel(x: 1.0, y: 0.0),
+        PointModel(x: 0.0, y: 1.0),
+        PointModel(x: -1.0, y: 0.0),
       ];
 
       expect(point.sortInDegreesRelationToThis(points), expected);
@@ -70,11 +76,11 @@ void main() {
         PointModel(x: 0.0, y: -1.0),
       ];
       final List<PointModel> expected = [
-        PointModel(x: -1.0, y: 0.0),
         PointModel(x: -1.0, y: -1.0),
         PointModel(x: 0.0, y: -1.0),
         PointModel(x: 1.0, y: -1.0),
         PointModel(x: 1.0, y: 0.0),
+        PointModel(x: -1.0, y: 0.0),
       ];
 
       expect(point.sortInDegreesRelationToThis(points), expected);
@@ -82,8 +88,8 @@ void main() {
   });
 
   group('Pozycja w relacji do lini', () {
-    final Point a = PointModel(x: 1.0, y: 0.0);
-    final Point b = PointModel(x: -1.0, y: 0.0);
+    final Point a = PointModel(x: -1.0, y: 0.0);
+    final Point b = PointModel(x: 1.0, y: 0.0);
 
     test('Pozycja na lewo od linii', () {
       final PointModel c = PointModel(x: 0.0, y: 1.0);
@@ -104,6 +110,24 @@ void main() {
 
       final position = c.positionInRelationToLine(a, b);
       expect(position, Position.Collinear);
+    });
+  });
+
+  group('Odległość między punktami', () {
+    final Point a = PointModel(x: 0.0, y: 0.0);
+
+    test('Odległość 1 na osi x', () {
+      final PointModel c = PointModel(x: 1.0, y: 0.0);
+
+      final position = c.lengthFromPoint(a);
+      expect(position, 1.0);
+    });
+
+    test('Odległość 1 na osi y', () {
+      final PointModel c = PointModel(x: 0.0, y: 1.0);
+
+      final position = c.lengthFromPoint(a);
+      expect(position, 1.0);
     });
   });
 }

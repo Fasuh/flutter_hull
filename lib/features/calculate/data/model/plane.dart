@@ -5,12 +5,12 @@ import 'package:flutter_otoczka/features/calculate/domain/entities/shape.dart';
 class PlaneModel extends Plane {
   PlaneModel({
     required this.points,
-    required this.lines,
+    required this.convexHull,
     required this.shape,
   });
 
   final List<Point> points;
-  final List<Point> lines;
+  final List<Point> convexHull;
   final Shape shape;
 
   Plane copyWith({
@@ -20,14 +20,14 @@ class PlaneModel extends Plane {
   }) {
     return PlaneModel(
       points: points ?? this.points,
-      lines: lines ?? this.lines,
+      convexHull: lines ?? this.convexHull,
       shape: shape ?? this.shape,
     );
   }
 
   List<Object?> get props => [
         points,
-        lines,
+        convexHull,
         shape,
       ];
 }

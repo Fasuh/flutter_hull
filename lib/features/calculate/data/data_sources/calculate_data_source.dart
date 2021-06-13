@@ -16,11 +16,11 @@ abstract class CalculateDataSource {
 class CalculateDataSourceImpl extends CalculateDataSource {
   @override
   Future<Plane> getPlaneForPoints(GetPlaneForPointsParam param) async {
-    final lines = calculateOuterRingFromPoints(param.points.cast<PointModel>());
+    final convexHull = calculateConvexHullFromPoints(param.points.cast<PointModel>());
     return PlaneModel(
       points: param.points,
-      lines: lines,
-      shape: getShapeFromLines(lines),
+      convexHull: convexHull,
+      shape: getShapeFromLines(convexHull),
     );
   }
 
@@ -33,23 +33,43 @@ class CalculateDataSourceImpl extends CalculateDataSource {
   }
 
   // Calculate the outer ring
-  List<Point> calculateOuterRingFromPoints(List<PointModel> points) {
+  List<Point> calculateConvexHullFromPoints(List<PointModel> points) {
     final lowestPoint = getLowestPoint(points) as PointModel;
-    final sorted = lowestPoint.sortInDegreesRelationToThis(points);
-    return getOuterRingFromPoints(sorted);
+    final pointsExcludingLowest = (List.from(points)..remove(lowestPoint)).cast<PointModel>();
+    final sorted = lowestPoint.sortInDegreesRelationToThis(pointsExcludingLowest);
+    return getConvexHullFromPoints(sorted, [lowestPoint]);
   }
 
   // Point furthest to the Y position, if two points have the same Y position sort them by X position
-  List<Point> getOuterRingFromPoints(List<Point> points) {
-    List<Point> hull = <Point>[points.first, points.elementAt(1)];
-    points.getRange(2, points.length).cast<PointModel>().forEach((point) {
-      final hullLastA = hull.last;
-      final hullLastB = hull.elementAt(hull.length-2);
-      final position = point.positionInRelationToLine(hullLastA, hullLastB);
-      if(position == Position.Left) {
-        hull.add(point);
-      }
+  List<Point> getConvexHullFromPoints(List<Point> points, List<Point> hull) {
+    hull.add(points[0]);
+    points.getRange(1, points.length).cast<PointModel>().forEach((point) {
+      hull = tryAddPointToHull(List.from(hull), point);
     });
+    final first = hull.first as PointModel;
+    hull = tryAddPointToHull(List.from(hull), first);
+    // remove duplicates
+    return hull.toSet().toList();
+  }
+
+  List<Point> tryAddPointToHull(List<Point> hull, PointModel point) {
+    final last = hull.last;
+    final preLast = hull.elementAt(hull.length-2) as PointModel;
+    final position = point.positionInRelationToLine(preLast, last);
+    if(!hull.contains(point)){
+      hull.add(point);
+    }
+    if(position != Position.Left) {
+      if(position == Position.Collinear) {
+        final lengthA = preLast.lengthFromPoint(last);
+        final lengthB = preLast.lengthFromPoint(point);
+        if(lengthB > lengthA) {
+          hull.remove(last);
+        }
+      } else {
+        hull.remove(last);
+      }
+    }
     return hull;
   }
 

@@ -5,7 +5,7 @@ import 'package:flutter_otoczka/features/calculate/domain/entities/shape.dart';
 abstract class Plane extends Equatable {
   List<Point> get points;
 
-  List<Point> get lines;
+  List<Point> get convexHull;
 
   Shape get shape;
 

@@ -15,7 +15,7 @@ class PointModel extends Point {
 
   // Position in relation to Line made with points "a" and "b"
   Position positionInRelationToLine(Point a, Point b) {
-    final position = (a.x - b.x) * (this.y - b.y) - (this.x - b.x) * (a.y - b.y);
+    final position = (b.x - a.x) * (this.y - a.y) - (this.x - a.x) * (b.y - a.y);
     if (position > 0) {
       return Position.Left;
     } else if (position < 0) {
@@ -23,6 +23,11 @@ class PointModel extends Point {
     } else {
       return Position.Collinear;
     }
+  }
+
+  // Length in relation to point
+  double lengthFromPoint(Point other) {
+    return Math.sqrt(Math.pow((other.x - this.x), 2) + Math.pow((other.y - this.y), 2));
   }
 
   // Sort points by degrees from point
@@ -36,7 +41,7 @@ class PointModel extends Point {
   }
 
   double degreesInRelationToPoint(Point other) {
-    return degrees(Math.atan2(other.y - this.y, other.x - this.x));
+    return degrees(Math.atan2(this.y - other.y, this.x - other.x));
   }
 
   @override
