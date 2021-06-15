@@ -1,12 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_otoczka/features/calculate/data/data_sources/calculate_data_source.dart';
 import 'package:flutter_otoczka/features/calculate/data/model/point.dart';
-import 'package:flutter_otoczka/features/calculate/domain/entities/point.dart';
 import 'package:flutter_otoczka/features/calculate/domain/entities/shape.dart';
 import 'package:flutter_otoczka/features/calculate/domain/use_cases/get_plane_for_points_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:flutter_otoczka/main.dart';
 
 void main() {
   CalculateDataSourceImpl dataSource = CalculateDataSourceImpl();
@@ -78,16 +74,33 @@ void main() {
       expect(actual.convexHull, expected);
     });
 
-    test('Poprawnie wyznacz otoczkę z czterech punktów współliniowych', () async {
+    test('Poprawnie wyznacz otoczkę z czterech punktów współliniowych na osi X', () async {
       final List<PointModel> points = [
-        PointModel(x: 3.0, y: 0.0),
+        PointModel(x: 0.0, y: 0.0),
         PointModel(x: 2.0, y: 0.0),
         PointModel(x: 1.0, y: 0.0),
-        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 4.0, y: 0.0),
       ];
       final List<PointModel> expected = [
         PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 3.0, y: 0.0),
+        PointModel(x: 4.0, y: 0.0),
+      ];
+
+      final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
+
+      expect(actual.convexHull, expected);
+    });
+
+    test('Poprawnie wyznacz otoczkę z czterech punktów współliniowych na osi Y', () async {
+      final List<PointModel> points = [
+        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 0.0, y: 2.0),
+        PointModel(x: 0.0, y: 1.0),
+        PointModel(x: 0.0, y: 4.0),
+      ];
+      final List<PointModel> expected = [
+        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 0.0, y: 4.0),
       ];
 
       final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
@@ -131,7 +144,7 @@ void main() {
       expect(actual.convexHull, expected);
     });
 
-    test('Poprawnie wyznacz otoczkę punktów które są w tych smaych kooordynatach', () async {
+    test('Poprawnie wyznacz otoczkę punktów które są w tych samych kooordynatach', () async {
       final List<PointModel> points = [
         PointModel(x: 0.0, y: 0.0),
         PointModel(x: 0.0, y: 0.0),
@@ -145,6 +158,98 @@ void main() {
       final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
 
       expect(actual.convexHull, expected);
+    });
+  });
+
+  group('Wyznaczanie kształtu otoczki', () {
+    test('Kształt otoczki punkt', () async {
+      final List<PointModel> points = [
+        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 0.0, y: 0.0),
+      ];
+
+      final expected = Shape.Dot;
+
+      final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
+
+      expect(actual.shape, expected);
+    });
+
+    test('Kształt otoczki linia', () async {
+      final List<PointModel> points = [
+        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 0.0, y: 2.0),
+        PointModel(x: 0.0, y: 1.0),
+        PointModel(x: 0.0, y: 4.0),
+      ];
+
+      final expected = Shape.Line;
+
+      final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
+
+      expect(actual.shape, expected);
+    });
+
+    test('Kształt otoczki trójkąt', () async {
+      final List<PointModel> points = [
+        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 2.0, y: 2.0),
+        PointModel(x: 0.0, y: 1.0),
+        PointModel(x: 0.0, y: 4.0),
+      ];
+
+      final expected = Shape.Triangle;
+
+      final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
+
+      expect(actual.shape, expected);
+    });
+
+    test('Kształt otoczki Kwadrat', () async {
+      final List<PointModel> points = [
+        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 2.0, y: 0.0),
+        PointModel(x: 2.0, y: 2.0),
+        PointModel(x: 0.0, y: 2.0),
+      ];
+
+      final expected = Shape.Square;
+
+      final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
+
+      expect(actual.shape, expected);
+    });
+
+    test('Kształt otoczki Czworokąt nie będący kwadratem', () async {
+      final List<PointModel> points = [
+        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 3.0, y: 0.0),
+        PointModel(x: 2.0, y: 2.0),
+        PointModel(x: 0.0, y: 2.0),
+      ];
+
+      final expected = Shape.Quadrangle;
+
+      final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
+
+      expect(actual.shape, expected);
+    });
+
+    test('Nie każdy prostokąt jest kwadratem', () async {
+      final List<PointModel> points = [
+        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 2.5, y: 0.0),
+        PointModel(x: 2.5, y: 1.5),
+        PointModel(x: 0.0, y: 1.5),
+      ];
+
+      final expected = Shape.Quadrangle;
+
+      final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
+
+      expect(actual.shape, expected);
     });
   });
 }

@@ -3,5 +3,5 @@ enum Shape {
   Line,
   Triangle,
   Quadrangle,
-  Polygon,
+  Square,
 }

@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter_otoczka/features/calculate/data/model/plane.dart';
 import 'package:flutter_otoczka/features/calculate/data/model/point.dart';
 import 'package:flutter_otoczka/features/calculate/domain/entities/plane.dart';
@@ -10,6 +8,7 @@ import 'package:flutter_otoczka/features/calculate/domain/use_cases/get_plane_fo
 
 abstract class CalculateDataSource {
   Future<Plane> getPlaneForPoints(GetPlaneForPointsParam param);
+
   Future<Plane> initializePlane();
 }
 
@@ -38,28 +37,30 @@ class CalculateDataSourceImpl extends CalculateDataSource {
     points.getRange(1, points.length).cast<PointModel>().forEach((point) {
       hull = tryAddPointToHull(List.from(hull), point);
     });
-    final first = hull.first as PointModel;
-    hull = tryAddPointToHull(List.from(hull), first);
+    if (hull.length > 2) {
+      final first = hull.first as PointModel;
+      hull = tryAddPointToHull(List.from(hull), first);
+    }
     // remove duplicates
     return hull.toSet().toList();
   }
 
   List<Point> tryAddPointToHull(List<Point> hull, PointModel point) {
     final last = hull.last;
-    final preLast = hull.elementAt(hull.length-2) as PointModel;
+    final preLast = hull.elementAt(hull.length - 2) as PointModel;
     final position = point.positionInRelationToLine(preLast, last);
-    if(!hull.contains(point)){
-      hull.add(point);
-    }
-    if(position != Position.Left) {
-      if(position == Position.Collinear) {
+    hull.add(point);
+    if (position != Position.Left) {
+      if (position == Position.Collinear) {
         final lengthA = preLast.lengthFromPoint(last);
         final lengthB = preLast.lengthFromPoint(point);
-        if(lengthB > lengthA) {
-          hull.remove(last);
+        if (lengthB > lengthA) {
+          hull.removeAt(hull.length-2);
+        } else {
+          hull.removeLast();
         }
       } else {
-        hull.remove(last);
+        hull.removeAt(hull.length-2);
       }
     }
     return hull;
@@ -78,7 +79,29 @@ class CalculateDataSourceImpl extends CalculateDataSource {
 
   // Get shape of the ring
   Shape getShapeFromLines(List<Point> points) {
-    return Shape.Polygon;
+    if (points.length == 1) {
+      return Shape.Dot;
+    } else if (points.length == 2) {
+      return Shape.Line;
+    } else if (points.length == 3) {
+      return Shape.Triangle;
+    } else if (points.length == 4) {
+      final x = (points.first as PointModel).lengthFromPoint(points.elementAt(1));
+      final y = (points.elementAt(1) as PointModel).lengthFromPoint(points.elementAt(2));
+      final z = (points.first as PointModel).lengthFromPoint(points.elementAt(2));
+      final g = (points.last as PointModel).lengthFromPoint(points.elementAt(1));
+      print(z);
+      print(g);
+      print(x);
+      print(y);
+      if(x == y && z == g) {
+        return Shape.Square;
+      } else {
+        return Shape.Quadrangle;
+      }
+    } else {
+      throw UnimplementedError();
+    }
   }
 
   @override
