@@ -1,16 +1,16 @@
+import 'dart:html';
+
 import 'package:flutter_otoczka/features/calculate/data/model/plane.dart';
 import 'package:flutter_otoczka/features/calculate/data/model/point.dart';
 import 'package:flutter_otoczka/features/calculate/domain/entities/plane.dart';
 import 'package:flutter_otoczka/features/calculate/domain/entities/point.dart';
 import 'package:flutter_otoczka/features/calculate/domain/entities/position.dart';
 import 'package:flutter_otoczka/features/calculate/domain/entities/shape.dart';
-import 'package:flutter_otoczka/features/calculate/domain/use_cases/create_point_use_case.dart';
 import 'package:flutter_otoczka/features/calculate/domain/use_cases/get_plane_for_points_use_case.dart';
 
 abstract class CalculateDataSource {
   Future<Plane> getPlaneForPoints(GetPlaneForPointsParam param);
-
-  Future<Point> createPoint(CreatePointParam param);
+  Future<Plane> initializePlane();
 }
 
 class CalculateDataSourceImpl extends CalculateDataSource {
@@ -21,14 +21,6 @@ class CalculateDataSourceImpl extends CalculateDataSource {
       points: param.points,
       convexHull: convexHull,
       shape: getShapeFromLines(convexHull),
-    );
-  }
-
-  @override
-  Future<Point> createPoint(CreatePointParam param) async {
-    return PointModel(
-      x: param.x,
-      y: param.y,
     );
   }
 
@@ -87,5 +79,16 @@ class CalculateDataSourceImpl extends CalculateDataSource {
   // Get shape of the ring
   Shape getShapeFromLines(List<Point> points) {
     return Shape.Polygon;
+  }
+
+  @override
+  Future<Plane> initializePlane() async {
+    final points = [
+      PointModel(x: 0.0, y: 0.0),
+      PointModel(x: 2.0, y: 0.0),
+      PointModel(x: 2.0, y: 2.0),
+      PointModel(x: 0.0, y: 2.0),
+    ];
+    return getPlaneForPoints(GetPlaneForPointsParam(points: points));
   }
 }

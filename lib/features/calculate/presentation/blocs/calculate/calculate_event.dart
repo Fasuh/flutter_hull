@@ -5,15 +5,13 @@ abstract class CalculateEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class CalculateAddPointEvent extends CalculateEvent {
-  CalculateAddPointEvent({
-    required this.x,
-    required this.y,
-  });
+class InitializePlaneEvent extends CalculateEvent {}
 
-  final double x;
-  final double y;
+class UpdatePlaneEvent extends CalculateEvent {
+  UpdatePlaneEvent({required this.points});
+
+  final List<Point> points;
 
   @override
-  List<Object?> get props => [x, y];
+  List<Object?> get props => [points];
 }
