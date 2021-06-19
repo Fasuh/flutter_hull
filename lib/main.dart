@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
+import 'package:flutter_otoczka/features/calculate/presentation/screens/calculator.dart';
 import 'package:flutter_otoczka/injection_container.dart';
 import 'package:flutter_otoczka/app_config.dart';
 import 'package:flutter_otoczka/core/app/navigator.dart';
@@ -14,18 +16,15 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return NeumorphicApp(
       onGenerateRoute: CustomNavigator.router.generator,
       navigatorKey: CustomNavigator.navigatorKey,
       localizationsDelegates: [S.delegate],
       supportedLocales: S.delegate.supportedLocales,
       title: 'Otoczka wypukła kalkulator',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      theme: neumorphicDefaultTheme.copyWith(),
       home: Scaffold(
-        body: Container(),
+        body: CalculatorScreen(),
       ),
     );
   }

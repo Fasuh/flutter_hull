@@ -8,10 +8,10 @@ abstract class CalculateEvent extends Equatable {
 class InitializePlaneEvent extends CalculateEvent {}
 
 class UpdatePlaneEvent extends CalculateEvent {
-  UpdatePlaneEvent({required this.points});
+  UpdatePlaneEvent({required this.point});
 
-  final List<Point> points;
+  final Point point;
 
   @override
-  List<Object?> get props => [points];
+  List<Object?> get props => [point];
 }

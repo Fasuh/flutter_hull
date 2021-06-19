@@ -1,3 +1,7 @@
 {
-  "defaultError": "There was an error"
+  "defaultError": "There was an error",
+  "appTitle": "Kalkulator otoczka wypukła",
+  "point": "punkt",
+  "calculatorPointX": "X",
+  "calculatorPointY": "Y"
 }

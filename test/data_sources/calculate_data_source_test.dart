@@ -10,14 +10,14 @@ void main() {
   group('Wyciąganie punktu najdalej wysuniętego ', () {
     test('zwykłe wyciąganie po pozycji Y', () {
       final List<PointModel> points = [
-        PointModel(x: 0.0, y: 1.0),
-        PointModel(x: 0.0, y: 10.0),
-        PointModel(x: 0.0, y: 2.0),
-        PointModel(x: 0.0, y: 3.0),
-        PointModel(x: 0.0, y: 8.0),
+        PointModel(x: 0.0, y: 1.0, id: 'test'),
+        PointModel(x: 0.0, y: 10.0, id: 'test'),
+        PointModel(x: 0.0, y: 2.0, id: 'test'),
+        PointModel(x: 0.0, y: 3.0, id: 'test'),
+        PointModel(x: 0.0, y: 8.0, id: 'test'),
       ];
 
-      final PointModel expected = PointModel(x: 0.0, y: 1.0);
+      final PointModel expected = PointModel(x: 0.0, y: 1.0, id: 'test');
 
       final furthest = dataSource.getLowestPoint(points);
       expect(furthest, expected);
@@ -25,14 +25,14 @@ void main() {
 
     test('Wyciąganie po pozycji X jeżeli Y jest takie same', () {
       final List<PointModel> points = [
-        PointModel(x: 2.0, y: 0.0),
-        PointModel(x: 3.0, y: 0.0),
-        PointModel(x: 10.0, y: 0.0),
-        PointModel(x: 4.0, y: 0.0),
-        PointModel(x: 6.0, y: 0.0),
+        PointModel(x: 2.0, y: 0.0, id: 'test'),
+        PointModel(x: 3.0, y: 0.0, id: 'test'),
+        PointModel(x: 10.0, y: 0.0, id: 'test'),
+        PointModel(x: 4.0, y: 0.0, id: 'test'),
+        PointModel(x: 6.0, y: 0.0, id: 'test'),
       ];
 
-      final PointModel expected = PointModel(x: 2.0, y: 0.0);
+      final PointModel expected = PointModel(x: 2.0, y: 0.0, id: 'test');
 
       final furthest = dataSource.getLowestPoint(points);
       expect(furthest, expected);
@@ -40,15 +40,15 @@ void main() {
 
     test('Wyciąganie mieszane priorytetyzuje pozycje Y', () {
       final List<PointModel> points = [
-        PointModel(x: 1.0, y: 4.0),
-        PointModel(x: 15.0, y: 3.0),
-        PointModel(x: 10.0, y: 5.0),
-        PointModel(x: 4.0, y: 2.0),
-        PointModel(x: 2.0, y: 2.0),
-        PointModel(x: 6.0, y: 5.0),
+        PointModel(x: 1.0, y: 4.0, id: 'test'),
+        PointModel(x: 15.0, y: 3.0, id: 'test'),
+        PointModel(x: 10.0, y: 5.0, id: 'test'),
+        PointModel(x: 4.0, y: 2.0, id: 'test'),
+        PointModel(x: 2.0, y: 2.0, id: 'test'),
+        PointModel(x: 6.0, y: 5.0, id: 'test'),
       ];
 
-      final PointModel expected = PointModel(x: 2.0, y: 2.0);
+      final PointModel expected = PointModel(x: 2.0, y: 2.0, id: 'test');
 
       final furthest = dataSource.getLowestPoint(points);
       expect(furthest, expected);
@@ -58,15 +58,15 @@ void main() {
   group('wyznaczanie otoczki', () {
     test('Poprawnie wyznacz otoczkę z czterech punktów', () async {
       final List<PointModel> points = [
-        PointModel(x: 2.0, y: 2.0),
-        PointModel(x: 2.0, y: 0.0),
-        PointModel(x: 1.0, y: 0.50),
-        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 2.0, y: 2.0, id: 'test'),
+        PointModel(x: 2.0, y: 0.0, id: 'test'),
+        PointModel(x: 1.0, y: 0.50, id: 'test'),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
       ];
       final List<PointModel> expected = [
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 2.0, y: 0.0),
-        PointModel(x: 2.0, y: 2.0),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
+        PointModel(x: 2.0, y: 0.0, id: 'test'),
+        PointModel(x: 2.0, y: 2.0, id: 'test'),
       ];
 
       final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
@@ -76,14 +76,14 @@ void main() {
 
     test('Poprawnie wyznacz otoczkę z czterech punktów współliniowych na osi X', () async {
       final List<PointModel> points = [
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 2.0, y: 0.0),
-        PointModel(x: 1.0, y: 0.0),
-        PointModel(x: 4.0, y: 0.0),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
+        PointModel(x: 2.0, y: 0.0, id: 'test'),
+        PointModel(x: 1.0, y: 0.0, id: 'test'),
+        PointModel(x: 4.0, y: 0.0, id: 'test'),
       ];
       final List<PointModel> expected = [
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 4.0, y: 0.0),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
+        PointModel(x: 4.0, y: 0.0, id: 'test'),
       ];
 
       final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
@@ -93,14 +93,14 @@ void main() {
 
     test('Poprawnie wyznacz otoczkę z czterech punktów współliniowych na osi Y', () async {
       final List<PointModel> points = [
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 0.0, y: 2.0),
-        PointModel(x: 0.0, y: 1.0),
-        PointModel(x: 0.0, y: 4.0),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
+        PointModel(x: 0.0, y: 2.0, id: 'test'),
+        PointModel(x: 0.0, y: 1.0, id: 'test'),
+        PointModel(x: 0.0, y: 4.0, id: 'test'),
       ];
       final List<PointModel> expected = [
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 0.0, y: 4.0),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
+        PointModel(x: 0.0, y: 4.0, id: 'test'),
       ];
 
       final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
@@ -110,15 +110,15 @@ void main() {
 
     test('Poprawnie wyznacz otoczkę punktów z czego pierwszy i ostatni są współliniowe', () async {
       final List<PointModel> points = [
-        PointModel(x: 2.0, y: 2.0),
-        PointModel(x: 2.0, y: 0.0),
-        PointModel(x: 1.0, y: 1.0),
-        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 2.0, y: 2.0, id: 'test'),
+        PointModel(x: 2.0, y: 0.0, id: 'test'),
+        PointModel(x: 1.0, y: 1.0, id: 'test'),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
       ];
       final List<PointModel> expected = [
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 2.0, y: 0.0),
-        PointModel(x: 2.0, y: 2.0),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
+        PointModel(x: 2.0, y: 0.0, id: 'test'),
+        PointModel(x: 2.0, y: 2.0, id: 'test'),
       ];
 
       final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
@@ -128,15 +128,15 @@ void main() {
 
     test('Poprawnie wyznacz otoczkę punktów z czego pierwszy i ostatni są tym samym punktem', () async {
       final List<PointModel> points = [
-        PointModel(x: 2.0, y: 2.0),
-        PointModel(x: 2.0, y: 0.0),
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 2.0, y: 2.0, id: 'test'),
+        PointModel(x: 2.0, y: 0.0, id: 'test'),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
       ];
       final List<PointModel> expected = [
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 2.0, y: 0.0),
-        PointModel(x: 2.0, y: 2.0),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
+        PointModel(x: 2.0, y: 0.0, id: 'test'),
+        PointModel(x: 2.0, y: 2.0, id: 'test'),
       ];
 
       final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
@@ -146,13 +146,13 @@ void main() {
 
     test('Poprawnie wyznacz otoczkę punktów które są w tych samych kooordynatach', () async {
       final List<PointModel> points = [
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
       ];
       final List<PointModel> expected = [
-        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
       ];
 
       final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
@@ -164,10 +164,10 @@ void main() {
   group('Wyznaczanie kształtu otoczki', () {
     test('Kształt otoczki punkt', () async {
       final List<PointModel> points = [
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 0.0, y: 0.0),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
       ];
 
       final expected = Shape.Dot;
@@ -179,10 +179,10 @@ void main() {
 
     test('Kształt otoczki linia', () async {
       final List<PointModel> points = [
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 0.0, y: 2.0),
-        PointModel(x: 0.0, y: 1.0),
-        PointModel(x: 0.0, y: 4.0),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
+        PointModel(x: 0.0, y: 2.0, id: 'test'),
+        PointModel(x: 0.0, y: 1.0, id: 'test'),
+        PointModel(x: 0.0, y: 4.0, id: 'test'),
       ];
 
       final expected = Shape.Line;
@@ -194,10 +194,10 @@ void main() {
 
     test('Kształt otoczki trójkąt', () async {
       final List<PointModel> points = [
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 2.0, y: 2.0),
-        PointModel(x: 0.0, y: 1.0),
-        PointModel(x: 0.0, y: 4.0),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
+        PointModel(x: 2.0, y: 2.0, id: 'test'),
+        PointModel(x: 0.0, y: 1.0, id: 'test'),
+        PointModel(x: 0.0, y: 4.0, id: 'test'),
       ];
 
       final expected = Shape.Triangle;
@@ -207,42 +207,12 @@ void main() {
       expect(actual.shape, expected);
     });
 
-    test('Kształt otoczki Kwadrat', () async {
+    test('Kształt otoczki czworokąt', () async {
       final List<PointModel> points = [
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 2.0, y: 0.0),
-        PointModel(x: 2.0, y: 2.0),
-        PointModel(x: 0.0, y: 2.0),
-      ];
-
-      final expected = Shape.Square;
-
-      final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
-
-      expect(actual.shape, expected);
-    });
-
-    test('Kształt otoczki Czworokąt nie będący kwadratem', () async {
-      final List<PointModel> points = [
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 3.0, y: 0.0),
-        PointModel(x: 2.0, y: 2.0),
-        PointModel(x: 0.0, y: 2.0),
-      ];
-
-      final expected = Shape.Quadrangle;
-
-      final actual = await dataSource.getPlaneForPoints(GetPlaneForPointsParam(points: points));
-
-      expect(actual.shape, expected);
-    });
-
-    test('Nie każdy prostokąt jest kwadratem', () async {
-      final List<PointModel> points = [
-        PointModel(x: 0.0, y: 0.0),
-        PointModel(x: 2.5, y: 0.0),
-        PointModel(x: 2.5, y: 1.5),
-        PointModel(x: 0.0, y: 1.5),
+        PointModel(x: 0.0, y: 0.0, id: 'test'),
+        PointModel(x: 2.0, y: 0.0, id: 'test'),
+        PointModel(x: 2.0, y: 2.0, id: 'test'),
+        PointModel(x: 0.0, y: 2.0, id: 'test'),
       ];
 
       final expected = Shape.Quadrangle;

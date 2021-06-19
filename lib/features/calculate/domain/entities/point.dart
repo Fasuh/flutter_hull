@@ -5,8 +5,11 @@ abstract class Point extends Equatable {
 
   double get y;
 
+  String get id;
+
   Point copyWith({
     double? x,
     double? y,
+    String? id,
   });
 }

@@ -17,7 +17,7 @@ class CalculateDataSourceImpl extends CalculateDataSource {
   Future<Plane> getPlaneForPoints(GetPlaneForPointsParam param) async {
     final convexHull = calculateConvexHullFromPoints(param.points.cast<PointModel>());
     return PlaneModel(
-      points: param.points,
+      points: List.from(param.points).cast<Point>()..sort((a, b) => a.id.compareTo(b.id)),
       convexHull: convexHull,
       shape: getShapeFromLines(convexHull),
     );
@@ -55,12 +55,12 @@ class CalculateDataSourceImpl extends CalculateDataSource {
         final lengthA = preLast.lengthFromPoint(last);
         final lengthB = preLast.lengthFromPoint(point);
         if (lengthB > lengthA) {
-          hull.removeAt(hull.length-2);
+          hull.removeAt(hull.length - 2);
         } else {
           hull.removeLast();
         }
       } else {
-        hull.removeAt(hull.length-2);
+        hull.removeAt(hull.length - 2);
       }
     }
     return hull;
@@ -86,19 +86,7 @@ class CalculateDataSourceImpl extends CalculateDataSource {
     } else if (points.length == 3) {
       return Shape.Triangle;
     } else if (points.length == 4) {
-      final x = (points.first as PointModel).lengthFromPoint(points.elementAt(1));
-      final y = (points.elementAt(1) as PointModel).lengthFromPoint(points.elementAt(2));
-      final z = (points.first as PointModel).lengthFromPoint(points.elementAt(2));
-      final g = (points.last as PointModel).lengthFromPoint(points.elementAt(1));
-      print(z);
-      print(g);
-      print(x);
-      print(y);
-      if(x == y && z == g) {
-        return Shape.Square;
-      } else {
-        return Shape.Quadrangle;
-      }
+      return Shape.Quadrangle;
     } else {
       throw UnimplementedError();
     }
@@ -107,10 +95,10 @@ class CalculateDataSourceImpl extends CalculateDataSource {
   @override
   Future<Plane> initializePlane() async {
     final points = [
-      PointModel(x: 0.0, y: 0.0),
-      PointModel(x: 2.0, y: 0.0),
-      PointModel(x: 2.0, y: 2.0),
-      PointModel(x: 0.0, y: 2.0),
+      PointModel(x: 0.0, y: 0.0, id: 'A'),
+      PointModel(x: 2.0, y: 0.0, id: 'B'),
+      PointModel(x: 2.0, y: 2.0, id: 'C'),
+      PointModel(x: 0.0, y: 2.0, id: 'D'),
     ];
     return getPlaneForPoints(GetPlaneForPointsParam(points: points));
   }

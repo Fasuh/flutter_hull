@@ -42,8 +42,12 @@ class CalculateBloc extends Bloc<CalculateEvent, CalculateState> {
   }
 
   Stream<CalculateState> _mapUpdatePlaneEvent(UpdatePlaneEvent event) async* {
+    final newList = List.from(_plane.points).cast<Point>()
+      ..removeWhere((element) => element.id == event.point.id)
+      ..add(event.point);
+
     final result = await getPlaneForPointsUseCase(
-      GetPlaneForPointsParam(points: event.points),
+      GetPlaneForPointsParam(points: newList),
     );
     yield* result.fold((error) async* {
       yield CalculateErrorDataState(plane: _plane, failure: error);

@@ -8,10 +8,12 @@ class PointModel extends Point {
   PointModel({
     required this.x,
     required this.y,
+    required this.id,
   });
 
   final double x;
   final double y;
+  final String id;
 
   // Position in relation to Line made with points "a" and "b"
   Position positionInRelationToLine(Point a, Point b) {
@@ -45,13 +47,15 @@ class PointModel extends Point {
   }
 
   @override
-  Point copyWith({double? x, double? y}) {
+  Point copyWith({double? x, double? y, String? id}) {
     return PointModel(
       x: x ?? this.x,
       y: y ?? this.y,
+      id: id ?? this.id,
     );
   }
 
+  /// we do not want to identify point on id
   List<Object?> get props => [
         x,
         y,
