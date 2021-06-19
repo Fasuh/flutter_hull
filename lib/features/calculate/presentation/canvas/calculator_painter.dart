@@ -53,7 +53,7 @@ class CalculatorPainter extends CustomPainter {
     final distance = biggest - smallest;
     final bottomRightPoint = size.bottomRight(Offset.zero);
     final aspect = bottomRightPoint.dy < bottomRightPoint.dx ? bottomRightPoint.dy : bottomRightPoint.dx;
-    scale = (aspect / distance.distance) * 0.8;
+    scale = (aspect / distance.distance) * 0.6;
   }
 
   void initializeOffset(Size size) {
