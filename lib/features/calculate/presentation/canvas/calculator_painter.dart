@@ -15,7 +15,7 @@ class CalculatorPainter extends CustomPainter {
   Paint get blackPaint => Paint();
 
   Paint get redNonStrokePaint => Paint()
-    ..color = Colors.blue
+    ..color = defaultLineColor
     ..style = PaintingStyle.stroke
     ..strokeWidth = 4;
 
@@ -58,7 +58,15 @@ class CalculatorPainter extends CustomPainter {
 
   void initializeOffset(Size size) {
     final bottomRightPoint = size.bottomRight(Offset.zero);
+    final smallest = smallestOffset;
+
     offset = bottomRightPoint * 0.2;
+
+    if (smallest.dx < 0) {
+      offset = Offset(offset.dx - smallest.dx * scale, offset.dy);
+    } if(smallest.dy < 0) {
+      offset = Offset(offset.dx, offset.dy - smallest.dy * scale);
+    }
   }
 
   void drawPointsLabels(Canvas canvas, Size size) {
