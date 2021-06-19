@@ -5,6 +5,7 @@ import 'package:flutter_otoczka/core/presentation/widgets/default_error_screen.d
 import 'package:flutter_otoczka/features/calculate/presentation/blocs/calculate/calculate_bloc.dart';
 import 'package:flutter_otoczka/features/calculate/presentation/widgets/calculator_canvas_wrapper.dart';
 import 'package:flutter_otoczka/features/calculate/presentation/widgets/calculator_points_section.dart';
+import 'package:flutter_otoczka/features/calculate/presentation/widgets/calculator_shape_element.dart';
 import 'package:flutter_otoczka/features/calculate/presentation/widgets/calculator_title.dart';
 import 'package:flutter_otoczka/injection_container.dart';
 
@@ -56,6 +57,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 CalculatorTitle(),
+                                CalculatorShapeElement(
+                                  plane: state.plane,
+                                ),
                                 CalculatorPointsSection(
                                   points: state.plane.points,
                                   onChanged: (point) => calculateBloc.add(UpdatePlaneEvent(point: point)),

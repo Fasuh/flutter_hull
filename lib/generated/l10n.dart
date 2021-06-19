@@ -80,6 +80,56 @@ class S {
     );
   }
 
+  /// `Punkt`
+  String get shapeDot {
+    return Intl.message(
+      'Punkt',
+      name: 'shapeDot',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Linia`
+  String get shapeLine {
+    return Intl.message(
+      'Linia',
+      name: 'shapeLine',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Trójkąt`
+  String get shapeTriangle {
+    return Intl.message(
+      'Trójkąt',
+      name: 'shapeTriangle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Czworokąt`
+  String get shapeQuadrangle {
+    return Intl.message(
+      'Czworokąt',
+      name: 'shapeQuadrangle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Kształt to:`
+  String get shapeIs {
+    return Intl.message(
+      'Kształt to:',
+      name: 'shapeIs',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `X`
   String get calculatorPointX {
     return Intl.message(

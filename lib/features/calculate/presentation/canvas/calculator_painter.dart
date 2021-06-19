@@ -51,9 +51,13 @@ class CalculatorPainter extends CustomPainter {
     final smallest = smallestOffset;
     final biggest = biggestOffset;
     final distance = biggest - smallest;
-    final bottomRightPoint = size.bottomRight(Offset.zero);
-    final aspect = bottomRightPoint.dy < bottomRightPoint.dx ? bottomRightPoint.dy : bottomRightPoint.dx;
-    scale = (aspect / distance.distance) * 0.6;
+    if (distance.distance != 0.0) {
+      final bottomRightPoint = size.bottomRight(Offset.zero);
+      final aspect = bottomRightPoint.dy < bottomRightPoint.dx ? bottomRightPoint.dy : bottomRightPoint.dx;
+      scale = (aspect / distance.distance) * 0.6;
+    } else {
+      scale = 0.0;
+    }
   }
 
   void initializeOffset(Size size) {
@@ -62,11 +66,8 @@ class CalculatorPainter extends CustomPainter {
 
     offset = bottomRightPoint * 0.2;
 
-    if (smallest.dx < 0) {
-      offset = Offset(offset.dx - smallest.dx * scale, offset.dy);
-    } if(smallest.dy < 0) {
-      offset = Offset(offset.dx, offset.dy - smallest.dy * scale);
-    }
+    offset = Offset(offset.dx - smallest.dx * scale, offset.dy);
+    offset = Offset(offset.dx, offset.dy - smallest.dy * scale);
   }
 
   void drawPointsLabels(Canvas canvas, Size size) {
@@ -83,7 +84,8 @@ class CalculatorPainter extends CustomPainter {
         ..pushStyle(ui.TextStyle(color: defaultTextColor))
         ..addText(point.id);
       final paragraph = paragraphBuilder.build()..layout(ui.ParagraphConstraints(width: 20));
-      canvas.drawParagraph(paragraph, position);
+      final offset = pointLabelOffset(point);
+      canvas.drawParagraph(paragraph, (position - Offset(paragraph.width/2, paragraph.height/2)) + offset * 20);
     });
   }
 
@@ -118,6 +120,21 @@ class CalculatorPainter extends CustomPainter {
     );
   }
 
+  Offset pointLabelOffset(Point point) {
+    switch (point.id) {
+      case 'A':
+        return Offset(1, -1);
+      case 'B':
+        return Offset(-1, -1);
+      case 'C':
+        return Offset(-1, 1);
+      case 'D':
+        return Offset(1, 1);
+      default:
+        throw UnimplementedError();
+    }
+  }
+
   Offset offsetFromPoint(Point point, Size size) {
     final maxSize = size.bottomRight(Offset.zero);
     final scaledPoint = Offset(point.x, point.y) * scale + offset;
@@ -125,5 +142,5 @@ class CalculatorPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+  bool shouldRepaint(covariant CalculatorPainter oldDelegate) => oldDelegate.plane != plane;
 }

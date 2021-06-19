@@ -27,6 +27,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "calculatorPointY": MessageLookupByLibrary.simpleMessage("Y"),
         "defaultError":
             MessageLookupByLibrary.simpleMessage("There was an error"),
-        "point": MessageLookupByLibrary.simpleMessage("punkt")
+        "point": MessageLookupByLibrary.simpleMessage("punkt"),
+        "shapeDot": MessageLookupByLibrary.simpleMessage("Punkt"),
+        "shapeIs": MessageLookupByLibrary.simpleMessage("Kształt to:"),
+        "shapeLine": MessageLookupByLibrary.simpleMessage("Linia"),
+        "shapeQuadrangle": MessageLookupByLibrary.simpleMessage("Czworokąt"),
+        "shapeTriangle": MessageLookupByLibrary.simpleMessage("Trójkąt")
       };
 }

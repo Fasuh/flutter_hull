@@ -2,6 +2,11 @@
   "defaultError": "There was an error",
   "appTitle": "Kalkulator otoczka wypukła",
   "point": "punkt",
+  "shapeDot": "Punkt",
+  "shapeLine": "Linia",
+  "shapeTriangle": "Trójkąt",
+  "shapeQuadrangle": "Czworokąt",
+  "shapeIs": "Kształt to:",
   "calculatorPointX": "X",
   "calculatorPointY": "Y"
 }
