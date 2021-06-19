@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
+import 'package:flutter_otoczka/core/style/colors.dart';
 import 'package:flutter_otoczka/core/style/text_styles.dart';
 import 'package:flutter_otoczka/features/calculate/presentation/input_formatters/double_text_input_formatter.dart';
 
@@ -47,6 +48,7 @@ class _CalculatorPointExpandableBodyValueState extends State<CalculatorPointExpa
             style: NeumorphicStyle(
               depth: 1.5,
               intensity: 200,
+              color: defaultTextColor,
             ),
             textStyle: NeumorphicTextStyle(
               fontSize: 25,
@@ -72,7 +74,7 @@ class _CalculatorPointExpandableBodyValueState extends State<CalculatorPointExpa
                 enabledBorder: InputBorder.none,
                 contentPadding: EdgeInsets.symmetric(horizontal: 10.0),
               ),
-              style: roboto.s26.bold,
+              style: roboto.s26.bold.colorDefault,
             ),
           ),
         )

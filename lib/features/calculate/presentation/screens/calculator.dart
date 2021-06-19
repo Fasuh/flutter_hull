@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
 import 'package:flutter_otoczka/core/presentation/widgets/default_error_screen.dart';
 import 'package:flutter_otoczka/features/calculate/presentation/blocs/calculate/calculate_bloc.dart';
+import 'package:flutter_otoczka/features/calculate/presentation/widgets/calculator_canvas_wrapper.dart';
 import 'package:flutter_otoczka/features/calculate/presentation/widgets/calculator_points_section.dart';
 import 'package:flutter_otoczka/features/calculate/presentation/widgets/calculator_title.dart';
 import 'package:flutter_otoczka/injection_container.dart';
@@ -37,7 +38,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
               body: Row(
                 children: [
                   Expanded(
-                    child: Container(),
+                    child: CalculatorCanvas(
+                      plane: state.plane,
+                    ),
                   ),
                   Container(
                     width: 350,

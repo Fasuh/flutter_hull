@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
+import 'package:flutter_otoczka/core/style/colors.dart';
 import 'package:flutter_otoczka/features/calculate/presentation/screens/calculator.dart';
 import 'package:flutter_otoczka/injection_container.dart';
 import 'package:flutter_otoczka/app_config.dart';
@@ -22,7 +23,9 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: [S.delegate],
       supportedLocales: S.delegate.supportedLocales,
       title: 'Otoczka wypukła kalkulator',
-      theme: neumorphicDefaultTheme.copyWith(),
+      theme: neumorphicDefaultTheme.copyWith(
+        baseColor: defaultBackgroundColor,
+      ),
       home: Scaffold(
         body: CalculatorScreen(),
       ),

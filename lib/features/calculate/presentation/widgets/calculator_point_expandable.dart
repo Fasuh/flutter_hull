@@ -21,6 +21,9 @@ class CalculatorPointExpandable extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Neumorphic(
+        style: NeumorphicStyle(
+          depth: -4,
+        ),
         child: ExpandableNotifier(
           child: Expandable(
             collapsed: CalculatorPointExpandableHeader(

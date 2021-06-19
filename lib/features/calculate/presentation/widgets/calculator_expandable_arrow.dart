@@ -1,6 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
+import 'package:flutter_otoczka/core/style/colors.dart';
 
 class CalculatorExpandableArrow extends StatelessWidget {
   const CalculatorExpandableArrow({
@@ -22,6 +23,7 @@ class CalculatorExpandableArrow extends StatelessWidget {
         style: NeumorphicStyle(
           depth: 1.5,
           intensity: 200,
+          color: defaultTextColor,
         ),
         size: 40,
       ),

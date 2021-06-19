@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic_null_safety/flutter_neumorphic.dart';
+import 'package:flutter_otoczka/core/style/colors.dart';
 import 'package:flutter_otoczka/features/calculate/domain/entities/point.dart';
 import 'package:flutter_otoczka/features/calculate/presentation/widgets/calculator_expandable_arrow.dart';
 import 'package:flutter_otoczka/generated/l10n.dart';
@@ -23,8 +24,15 @@ class CalculatorPointExpandableHeader extends StatelessWidget {
           children: [
             NeumorphicText(
               '${S.of(context).point} ${point.id}',
-              style: NeumorphicStyle(depth: 1.5, intensity: 200),
-              textStyle: NeumorphicTextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+              style: NeumorphicStyle(
+                depth: 1.5,
+                intensity: 200,
+                color: defaultTextColor
+              ),
+              textStyle: NeumorphicTextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             CalculatorExpandableArrow(),
           ],

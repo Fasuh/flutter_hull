@@ -97,6 +97,8 @@ class CustomTextStyle extends TextStyle {
 
   CustomTextStyle get colorWhite => copyWith(color: whiteColor);
 
+  CustomTextStyle get colorDefault => copyWith(color: defaultTextColor);
+
   CustomTextStyle get colorHintDefault => copyWith(color: whiteColor);
 
   CustomTextStyle get colorBlack => copyWith(color: blackColor);
