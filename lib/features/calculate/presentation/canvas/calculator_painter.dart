@@ -42,8 +42,8 @@ class CalculatorPainter extends CustomPainter {
     initializeScale(size);
     initializeOffset(size);
     drawChart(canvas, size);
-    drawPoints(canvas, size);
     drawConvexHull(canvas, size);
+    drawPoints(canvas, size);
     drawPointsLabels(canvas, size);
   }
 
