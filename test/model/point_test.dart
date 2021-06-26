@@ -1,13 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_otoczka/features/calculate/data/data_sources/calculate_data_source.dart';
 import 'package:flutter_otoczka/features/calculate/data/model/point.dart';
 import 'package:flutter_otoczka/features/calculate/domain/entities/point.dart';
 import 'package:flutter_otoczka/features/calculate/domain/entities/position.dart';
-import 'package:flutter_otoczka/features/calculate/domain/entities/shape.dart';
-import 'package:flutter_otoczka/features/calculate/domain/use_cases/get_plane_for_points_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:flutter_otoczka/main.dart';
 
 void main() {
   group('Wyznaczanie kątu między punktami', () {
