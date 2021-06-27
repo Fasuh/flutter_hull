@@ -46,7 +46,7 @@ class CalculatorCanvas extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4.0),
                           child: NeumorphicText(
-                            '${S.of(context).calculatorPointX}: ${point.x}, ${S.of(context).calculatorPointY}: ${point.y}',
+                            '${point.id} - ${S.of(context).calculatorPointX}: ${point.x}, ${S.of(context).calculatorPointY}: ${point.y}',
                             style: NeumorphicStyle(
                               depth: 1.5,
                               intensity: 200,
