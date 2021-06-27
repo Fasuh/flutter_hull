@@ -130,6 +130,16 @@ class S {
     );
   }
 
+  /// `Punkty otoczki:`
+  String get pointsAre {
+    return Intl.message(
+      'Punkty otoczki:',
+      name: 'pointsAre',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `X`
   String get calculatorPointX {
     return Intl.message(

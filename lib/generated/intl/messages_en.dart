@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "defaultError":
             MessageLookupByLibrary.simpleMessage("There was an error"),
         "point": MessageLookupByLibrary.simpleMessage("punkt"),
+        "pointsAre": MessageLookupByLibrary.simpleMessage("Punkty otoczki:"),
         "shapeDot": MessageLookupByLibrary.simpleMessage("Punkt"),
         "shapeIs": MessageLookupByLibrary.simpleMessage("Kształt to:"),
         "shapeLine": MessageLookupByLibrary.simpleMessage("Linia"),
